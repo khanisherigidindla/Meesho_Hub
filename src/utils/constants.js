@@ -9,7 +9,7 @@ export const STORAGE_KEYS = {
 
 export const AUTH_CREDENTIALS = {
   email: 'admin@gmail.com',
-  password: 'admin10',
+  password: 'admin12',
 };
 
 export const DEFAULT_SETTINGS = {

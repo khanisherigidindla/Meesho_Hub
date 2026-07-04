@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiSave, FiDownload, FiUpload, FiTrash2 } from 'react-icons/fi';
+import { FiSave, FiDownload, FiUpload, FiTrash2, FiMoon, FiSun, FiPalette } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
 import ConfirmModal from '../components/ConfirmModal';
 import { exportAllData, downloadFile, readFileAsText } from '../utils/storage';
-import { STORAGE_KEYS } from '../utils/constants';
+import { STORAGE_KEYS, THEME_COLORS } from '../utils/constants';
 
 const Settings = () => {
-  const { settings, setSettings, restoreData, riders, attendance, shipments } = useApp();
+  const { settings, setSettings, restoreData, riders, attendance, shipments, theme, toggleTheme } = useApp();
   const [form, setForm] = useState({ ...settings });
   const [saved, setSaved] = useState(false);
   const [showClear, setShowClear] = useState(false);
@@ -51,17 +51,76 @@ const Settings = () => {
     window.location.reload();
   };
 
-  return (
-    <div className="space-y-6 max-w-2xl">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settings</h1>
+  const handleThemeColorChange = (color) => {
+    setForm((prev) => ({ ...prev, themeColor: color }));
+  };
 
+  return (
+    <div className="space-y-6 max-w-3xl">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex items-center gap-3"
+      >
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-600 to-slate-700 flex items-center justify-center">
+          <FiPalette className="w-6 h-6 text-white" />
+        </div>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
+      </motion.div>
+
+      {/* Theme Settings */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="card"
+      >
+        <h2 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+          <FiPalette className="w-5 h-5 text-primary-600" />
+          Theme Settings
+        </h2>
+        
+        <div className="space-y-4">
+          <div>
+            <label className="label mb-3">Color Theme</label>
+            <div className="grid grid-cols-5 md:grid-cols-10 gap-3">
+              {THEME_COLORS.map((color) => (
+                <button
+                  key={color.value}
+                  onClick={() => handleThemeColorChange(color.value)}
+                  className={`w-10 h-10 rounded-xl bg-gradient-to-br from-${color.value}-500 to-${color.value}-600 
+                    ${form.themeColor === color.value ? 'ring-2 ring-offset-2 ring-gray-900 dark:ring-white' : ''}
+                    hover:scale-110 transition-transform`}
+                  title={color.name}
+                />
+              ))}
+            </div>
+          </div>
+          
+          <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+            <button
+              onClick={toggleTheme}
+              className="btn-secondary flex items-center gap-2"
+            >
+              {theme === 'light' ? <FiMoon className="w-4 h-4" /> : <FiSun className="w-4 h-4" />}
+              Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+            </button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Warehouse Information */}
       <motion.form
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
         onSubmit={handleSave}
         className="card space-y-4"
       >
-        <h2 className="font-semibold text-gray-900 dark:text-white">Warehouse Information</h2>
+        <h2 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+          <FiSave className="w-5 h-5 text-primary-600" />
+          Warehouse Information
+        </h2>
         <div>
           <label className="label">Warehouse Name</label>
           <input type="text" name="warehouseName" value={form.warehouseName || ''} onChange={handleChange} className="input-field" />
@@ -80,13 +139,17 @@ const Settings = () => {
         </button>
       </motion.form>
 
+      {/* Backup & Restore */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
+        transition={{ delay: 0.3 }}
         className="card space-y-4"
       >
-        <h2 className="font-semibold text-gray-900 dark:text-white">Backup & Restore</h2>
+        <h2 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+          <FiDownload className="w-5 h-5 text-primary-600" />
+          Backup & Restore
+        </h2>
         <p className="text-sm text-gray-500">
           Export all data as JSON backup. Restore from a previous backup file.
         </p>
@@ -104,13 +167,17 @@ const Settings = () => {
         </div>
       </motion.div>
 
+      {/* Danger Zone */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: 0.4 }}
         className="card border-red-200 dark:border-red-800"
       >
-        <h2 className="font-semibold text-red-600 mb-2">Danger Zone</h2>
+        <h2 className="font-semibold text-red-600 mb-2 flex items-center gap-2">
+          <FiTrash2 className="w-5 h-5" />
+          Danger Zone
+        </h2>
         <p className="text-sm text-gray-500 mb-4">
           Clear all riders, attendance, and shipment data. This cannot be undone.
         </p>

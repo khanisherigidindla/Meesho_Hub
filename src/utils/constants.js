@@ -79,3 +79,17 @@ export const SORT_OPTIONS = [
 ];
 
 export const ITEMS_PER_PAGE = 10;
+
+// Theme Colors - 10 Professional Options
+export const THEME_COLORS = [
+  { name: 'Blue', value: 'blue', primary: '#3b82f6', secondary: '#60a5fa' },
+  { name: 'Emerald', value: 'emerald', primary: '#10b981', secondary: '#34d399' },
+  { name: 'Purple', value: 'purple', primary: '#8b5cf6', secondary: '#a78bfa' },
+  { name: 'Rose', value: 'rose', primary: '#f43f5e', secondary: '#fb7185' },
+  { name: 'Orange', value: 'orange', primary: '#f97316', secondary: '#fb923c' },
+  { name: 'Cyan', value: 'cyan', primary: '#06b6d4', secondary: '#22d3ee' },
+  { name: 'Indigo', value: 'indigo', primary: '#6366f1', secondary: '#818cf8' },
+  { name: 'Green', value: 'green', primary: '#22c55e', secondary: '#4ade80' },
+  { name: 'Violet', value: 'violet', primary: '#7c3aed', secondary: '#8b5cf6' },
+  { name: 'Pink', value: 'pink', primary: '#ec4899', secondary: '#f472b6' },
+];

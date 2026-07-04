@@ -51,8 +51,10 @@ const Settings = () => {
     window.location.reload();
   };
 
-  const handleThemeColorChange = (color) => {
-    setForm((prev) => ({ ...prev, themeColor: color }));
+const handleThemeColorChange = (color) => {
+    const newSettings = { ...form, themeColor: color };
+    setForm(newSettings);
+    setSettings(newSettings); // Apply immediately
   };
 
   return (

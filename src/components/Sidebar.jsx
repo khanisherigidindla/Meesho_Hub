@@ -25,10 +25,9 @@ const Sidebar = ({ isOpen, onClose }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [showCalculator, setShowCalculator] = useState(false);
 
-  const menuItems = [
+const menuItems = [
     { to: '/', icon: FiHome, label: 'Home', color: 'from-blue-500 to-cyan-500' },
     { to: '/dashboard', icon: FiBarChart2, label: 'Dashboard', color: 'from-indigo-500 to-blue-500' },
-    { to: '/contact', icon: FiMail, label: 'Contact', color: 'from-pink-500 to-rose-500' },
     { to: '/riders', icon: FiUsers, label: 'Riders', color: 'from-green-500 to-emerald-500' },
     { to: '/attendance', icon: FiList, label: 'Attendance', color: 'from-orange-500 to-amber-500' },
     { to: '/shipments', icon: FiTruck, label: 'Shipments', color: 'from-purple-500 to-violet-500' },
@@ -38,6 +37,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     { to: '/returns', icon: FiRefreshCw, label: 'Returns', color: 'from-amber-500 to-orange-500' },
     { to: '/revenue', icon: FiDollarSign, label: 'Revenue', color: 'from-emerald-500 to-green-500' },
     { to: '/reports', icon: FiBarChart2, label: 'Reports', color: 'from-red-500 to-rose-500' },
+    { to: '/contact', icon: FiMail, label: 'Contact', color: 'from-sky-500 to-blue-500' },
     { to: '/settings', icon: FiSettings, label: 'Settings', color: 'from-gray-500 to-slate-500' },
   ];
 

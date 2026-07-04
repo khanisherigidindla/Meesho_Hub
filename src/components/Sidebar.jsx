@@ -18,12 +18,14 @@ import {
 } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
 import { useState } from 'react';
+import Calculator from './Calculator';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const { logout } = useApp();
   const [collapsed, setCollapsed] = useState(false);
+  const [showCalculator, setShowCalculator] = useState(false);
 
-const menuItems = [
+  const menuItems = [
     { to: '/', icon: FiHome, label: 'Home', color: 'from-blue-500 to-cyan-500' },
     { to: '/dashboard', icon: FiBarChart2, label: 'Dashboard', color: 'from-indigo-500 to-blue-500' },
     { to: '/contact', icon: FiMail, label: 'Contact', color: 'from-pink-500 to-rose-500' },
@@ -59,8 +61,8 @@ const menuItems = [
                   <FiGrid className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="font-bold text-gray-900 dark:text-white">WRMS Pro</h1>
-                  <p className="text-xs text-gray-500">v2.0</p>
+                  <h1 className="font-bold text-gray-900 dark:text-white">MeeshQRS</h1>
+                  <p className="text-xs text-gray-500">v1.0</p>
                 </div>
               </motion.div>
             )}
@@ -103,7 +105,16 @@ const menuItems = [
         </nav>
 
         {/* Footer */}
-        <div className="p-3 border-t border-gray-100 dark:border-gray-700/50">
+        <div className="p-3 border-t border-gray-100 dark:border-gray-700/50 space-y-2">
+          <button
+            onClick={() => setShowCalculator(true)}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+          >
+            <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
+              <FiGrid className="w-5 h-5" />
+            </div>
+            {!collapsed && <span className="font-medium">Calculator</span>}
+          </button>
           <button
             onClick={logout}
             className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 transition-all duration-200"
@@ -115,6 +126,8 @@ const menuItems = [
           </button>
         </div>
       </div>
+      
+      <Calculator isOpen={showCalculator} onClose={() => setShowCalculator(false)} />
     </motion.aside>
   );
 };

@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect } from 'react';
+ import { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiPlus, FiEye, FiEdit2, FiTrash2, FiDownload, FiUpload, FiUsers } from 'react-icons/fi';
+import { FiPlus, FiEye, FiEdit2, FiTrash2, FiDownload, FiUpload, FiUsers, FiPrinter } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
 import SearchBox from '../components/SearchBox';
 import Modal from '../components/Modal';
@@ -76,9 +76,50 @@ const Riders = () => {
     setDeleteId(null);
   };
 
-  const handleExport = () => {
+const handleExport = () => {
     const csv = ridersToCSV(riders);
     downloadFile(csv, `riders-${new Date().toISOString().split('T')[0]}.csv`);
+  };
+
+  const handlePrint = () => {
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Riders Data - MeeshQRS</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background: #f4f4f4; }
+            h1 { color: #3b82f6; }
+          </style>
+        </head>
+        <body>
+          <h1>Riders Data - MeeshQRS Warehouse</h1>
+          <p>Generated on: ${new Date().toLocaleString()}</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Rider ID</th><th>Name</th><th>Phone</th><th>Bike Number</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${riders.map(r => `<tr>
+                <td>${r.riderId || '-'}</td>
+                <td>${r.fullName || '-'}</td>
+                <td>${r.phone || '-'}</td>
+                <td>${r.bikeNumber || '-'}</td>
+                <td>${r.employmentStatus || '-'}
+              </td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
   };
 
   const handleImport = async (e) => {
@@ -103,7 +144,10 @@ const Riders = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Riders</h1>
-        <div className="flex flex-wrap gap-2">
+<div className="flex flex-wrap gap-2">
+<button onClick={handlePrint} className="btn-secondary flex items-center gap-2 text-sm">
+            <FiPrinter className="w-4 h-4" /> Print
+          </button>
           <button onClick={handleExport} className="btn-secondary flex items-center gap-2 text-sm">
             <FiDownload className="w-4 h-4" /> Export CSV
           </button>

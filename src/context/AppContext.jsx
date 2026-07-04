@@ -102,6 +102,16 @@ export const AppProvider = ({ children }) => {
   };
   const deleteCustomer = (id) => { setCustomers((prev) => prev.filter((c) => c.id !== id)); addActivity('Deleted Customer', `ID: ${id}`); };
 
+  // Shipment CRUD
+  const addShipment = (shipmentData) => {
+    const newShipment = { ...shipmentData, id: generateId(), createdAt: new Date().toISOString() };
+    setShipments((prev) => [newShipment, ...prev]);
+    addActivity('Added Shipment', shipmentData.shipmentId || 'New Shipment');
+    return newShipment;
+  };
+  const updateShipment = (id, shipmentData) => { setShipments((prev) => prev.map((s) => s.id === id ? { ...s, ...shipmentData } : s)); addActivity('Updated Shipment', shipmentData.shipmentId || 'Updated'); };
+  const deleteShipment = (id) => { setShipments((prev) => prev.filter((s) => s.id !== id)); addActivity('Deleted Shipment', `ID: ${id}`); };
+
   // Order CRUD
   const addOrder = (orderData) => {
     const newOrder = { ...orderData, id: generateId(), createdAt: new Date().toISOString(), orderDate: orderData.deliveryDate || getTodayDate() };

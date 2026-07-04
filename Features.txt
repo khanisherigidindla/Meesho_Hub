@@ -13,83 +13,45 @@
 - Credentials: admin@gmail.com / admin123
 - Mobile responsive layout
 
-## Home Page (Dashboard)
+## Home Page (Dashboard) - DEFAULT AFTER LOGIN
 - Dynamic greeting (Good Morning/Afternoon/Evening based on time)
 - Live time/date display
 - Animated floating boxes (toy animation)
-- KPI cards with trend indicators
-- Quick Actions grid with hover effects
-- Shows immediately after login
+- Today's Work Center with 4 key metrics
+- Smart Notifications with warning badges
+- Warehouse KPI Score (circular progress 0-100%)
+- Order Priority cards (Low/Medium/High/Urgent)
 
 ## Navigation Pages
-1. Dashboard - Full analytics dashboard with charts
-2. Riders - Manage rider information, status, photos, print/export
-3. Attendance - Track rider attendance
-4. Shipments - Manage shipment and rider assignments
-5. Orders - View, edit, delete orders with filters
-6. Customers - Customer management with contact cards
-7. Inventory - Stock management with rack visualization mode
-8. Returns - Return tracking with reasons
-9. Revenue - Financial tracking by payment type
-10. Reports - Analytics with bar graphs and charts
-11. Settings - Theme picker, backup/restore
-12. Contact - Contact form and developer info
+1. Home - Default dashboard with Work Center
+2. Dashboard - Full analytics with charts
+3. Riders - Manage rider info, photos, print/export
+4. Attendance - Track rider attendance
+5. Shipments - Manage shipment and rider assignments
+6. Orders - View, edit, delete orders with filters
+7. Customers - Customer management
+8. Inventory - Stock management
+9. Returns - Return tracking
+10. Revenue - Financial tracking
+11. Reports - Analytics with bar graphs
+12. Settings - Theme picker, backup/restore
+13. Contact - Contact form
 
 ## Theme System (10 Colors)
-- Blue (default)
-- Emerald
-- Purple
-- Rose
-- Orange
-- Cyan
-- Indigo
-- Green
-- Violet
-- Pink
-- Dark/Light mode toggle
+- Blue, Emerald, Purple, Rose, Orange, Cyan, Indigo, Green, Violet, Pink
 - Applied immediately when selecting
+- Dark/Light mode toggle
 
-## Calculator Feature
-- Available in Sidebar footer (above Logout button)
-- Beautiful glass-morphism modal design
-- Full calculator with +, -, ×, ÷ operations
-- Responsive design for mobile
-- Gradient buttons with hover effects
-
-## Riders Management
-- Photo upload support for each rider
-- Print functionality (opens printable table)
-- Export to CSV
-- Import from CSV
-- Search and filter capabilities
-- View/Edit/Delete actions
-- Avatar display in table
-
-## Reports & Analytics
-- Summary cards (Total Riders, Orders, Revenue, Shipments)
-- Orders by Status bar charts with counts
-- Revenue by Payment Type charts
-- Monthly Revenue Trend visualization
-- Animated progress bars
-
-## Contact Page
-- **Email**: khanishram@gmail.com
-- **Phone**: 9392997308
-- **Hub Location**: 28-3-378, Sri Lakshmi Nagar Road, Kisan Nagar, Ram Nagar, Nellore, Andhra Pradesh 524002
-- Contact form with validation
-- Position: After Reports in sidebar
+## Features Added
+- Beautiful Calculator modal
+- Print functionality in Riders
+- Photo upload for riders
+- Notes field for additional info
+- Low stock alerts
+- Reports with dynamic charts
+- Smart notifications
 
 ## Deployment Ready
-- **Netlify** (`netlify.toml`): Configured with NPM_FLAGS=--include=dev
-- **Vercel** (`vercel.json`): Configured for Vite framework
-- **Build command**: npm run build || pnpm build
-- **Publish directory**: dist
+- Netlify & Vercel configured
 
-## Technical Features
-- React + Vite + Tailwind CSS
-- Framer Motion animations
-- Responsive design (mobile-first)
-- LocalStorage for data persistence
-- Export/Import JSON backup
-- Real-time theme switching
-- Photo upload with base64 encoding
+## Login: admin@gmail.com / admin123

@@ -149,18 +149,8 @@ const Login = () => {
           transition={{ delay: 0.5 }}
           className="mt-6 grid grid-cols-3 gap-3 text-center"
         >
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <p className="text-2xl font-bold text-white">100+</p>
-            <p className="text-xs text-gray-400">Riders</p>
-          </div>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <p className="text-2xl font-bold text-white">500+</p>
-            <p className="text-xs text-gray-400">Orders</p>
-          </div>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <p className="text-2xl font-bold text-white">25+</p>
-            <p className="text-xs text-gray-400">Warehouses</p>
-          </div>
+          
+         
         </motion.div>
       </motion.div>
     </div>

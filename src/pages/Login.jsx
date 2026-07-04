@@ -137,7 +137,7 @@ const Login = () => {
 
           <div className="mt-6 pt-6 border-t border-white/10">
             <p className="text-center text-xs text-gray-400">
-              Warehouse Admin — Khanish Erigidindla
+              
             </p>
           </div>
         </motion.div>

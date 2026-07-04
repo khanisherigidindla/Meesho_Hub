@@ -28,6 +28,7 @@ const emptyRider = {
   endTime: '',
   emergencyContact: '',
   remarks: '',
+  notes: '',
 };
 
 const RiderForm = ({ initialData, onSubmit, onCancel, submitLabel = 'Save Rider' }) => {
@@ -77,16 +78,16 @@ const RiderForm = ({ initialData, onSubmit, onCancel, submitLabel = 'Save Rider'
         <Field label="Start Time" name="startTime" type="time" value={form.startTime} onChange={handleChange} />
         <Field label="End Time" name="endTime" type="time" value={form.endTime} onChange={handleChange} />
         <Field label="Emergency Contact" name="emergencyContact" value={form.emergencyContact} onChange={handleChange} />
-        <Field label="Remarks" name="remarks" value={form.remarks} onChange={handleChange} className="sm:col-span-2" />
+        <Field label="Additional Notes" name="notes" value={form.notes} onChange={handleChange} className="sm:col-span-2" type="textarea" />
       </div>
 
-      <div className="flex gap-3 justify-end pt-3 border-t border-gray-200 dark:border-gray-700 sticky bottom-0 bg-white dark:bg-gray-800">
+      <div className="flex gap-3 justify-end pt-4 sticky bottom-0 bg-white dark:bg-gray-800">
         {onCancel && (
-          <button type="button" onClick={onCancel} className="btn-secondary">
+          <button type="button" onClick={onCancel} className="btn-secondary px-6">
             Cancel
           </button>
         )}
-        <button type="submit" className="btn-primary">
+        <button type="submit" className="btn-primary px-6 flex items-center gap-2">
           {submitLabel}
         </button>
       </div>
@@ -94,10 +95,14 @@ const RiderForm = ({ initialData, onSubmit, onCancel, submitLabel = 'Save Rider'
   );
 };
 
-const Field = ({ label, name, value, onChange, type = 'text', className = '' }) => (
+const Field = ({ label, name, value, onChange, type = 'text', className = '', textarea = false }) => (
   <div className={className}>
     <label className="label">{label}</label>
-    <input type={type} name={name} value={value || ''} onChange={onChange} className="input-field" />
+    {textarea ? (
+      <textarea name={name} value={value || ''} onChange={onChange} className="input-field resize-none" rows={3} placeholder="Enter additional details..." />
+    ) : (
+      <input type={type} name={name} value={value || ''} onChange={onChange} className="input-field" />
+    )}
   </div>
 );
 

@@ -23,7 +23,7 @@
 
 ## Navigation Pages
 1. Dashboard - Full analytics dashboard with charts
-2. Riders - Manage rider information and status
+2. Riders - Manage rider information, status, photos, print/export
 3. Attendance - Track rider attendance
 4. Shipments - Manage shipment and rider assignments
 5. Orders - View, edit, delete orders with filters
@@ -35,7 +35,7 @@
 11. Settings - Theme picker, backup/restore
 12. Contact - Contact form and developer info
 
-## Theme System (10 Professional Colors)
+## Theme System (10 Colors)
 - Blue (default)
 - Emerald
 - Purple
@@ -50,23 +50,40 @@
 - Applied immediately when selecting
 
 ## Calculator Feature
-- Available in sidebar footer (above Logout)
-- Beautiful glass-morphism design
+- Available in Sidebar footer (above Logout button)
+- Beautiful glass-morphism modal design
 - Full calculator with +, -, ×, ÷ operations
 - Responsive design for mobile
+- Gradient buttons with hover effects
+
+## Riders Management
+- Photo upload support for each rider
+- Print functionality (opens printable table)
+- Export to CSV
+- Import from CSV
+- Search and filter capabilities
+- View/Edit/Delete actions
+- Avatar display in table
 
 ## Reports & Analytics
 - Summary cards (Total Riders, Orders, Revenue, Shipments)
-- Orders by Status bar charts
+- Orders by Status bar charts with counts
 - Revenue by Payment Type charts
 - Monthly Revenue Trend visualization
-- Animated charts with smooth transitions
+- Animated progress bars
+
+## Contact Page
+- **Email**: khanishram@gmail.com
+- **Phone**: 9392997308
+- **Hub Location**: 28-3-378, Sri Lakshmi Nagar Road, Kisan Nagar, Ram Nagar, Nellore, Andhra Pradesh 524002
+- Contact form with validation
+- Position: After Reports in sidebar
 
 ## Deployment Ready
-- Netlify: Configured (netlify.toml)
-- Vercel: Configured (vercel.json)
-- Build command: npm run build || pnpm build
-- Publish directory: dist
+- **Netlify** (`netlify.toml`): Configured with NPM_FLAGS=--include=dev
+- **Vercel** (`vercel.json`): Configured for Vite framework
+- **Build command**: npm run build || pnpm build
+- **Publish directory**: dist
 
 ## Technical Features
 - React + Vite + Tailwind CSS
@@ -75,3 +92,4 @@
 - LocalStorage for data persistence
 - Export/Import JSON backup
 - Real-time theme switching
+- Photo upload with base64 encoding

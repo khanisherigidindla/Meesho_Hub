@@ -130,8 +130,8 @@ const Home = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
             {greeting}, Admin! 👋
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-lg mb-2">
-            Meesho_HUb Warehouse -  Nellore , Andhra Pradesh
+<p className="text-gray-600 dark:text-gray-400 text-sm sm:text-lg mb-2">
+            Meesho_HUb - Professional Warehouse Management
           </p>
           <div className="flex items-center justify-center gap-2 text-gray-500 text-xs sm:text-sm">
             <FiClock className="w-3 h-3 sm:w-4 sm:h-4" />

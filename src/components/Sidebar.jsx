@@ -60,8 +60,8 @@ const menuItems = [
                   <FiGrid className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="font-bold text-gray-900 dark:text-white">MeeshQRS</h1>
-                  <p className="text-xs text-gray-500">v1.0</p>
+<h1 className="font-bold text-gray-900 dark:text-white">Meesho_HUb</h1>
+                  <p className="text-xs text-gray-500">Meesho_HUb</p>
                 </div>
               </motion.div>
             )}

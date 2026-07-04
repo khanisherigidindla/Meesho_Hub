@@ -22,8 +22,9 @@ const Sidebar = ({ isOpen, onClose }) => {
   const { logout } = useApp();
   const [collapsed, setCollapsed] = useState(false);
 
-  const menuItems = [
-    { to: '/dashboard', icon: FiHome, label: 'Dashboard', color: 'from-blue-500 to-cyan-500' },
+const menuItems = [
+    { to: '/', icon: FiHome, label: 'Home', color: 'from-blue-500 to-cyan-500' },
+    { to: '/dashboard', icon: FiBarChart2, label: 'Dashboard', color: 'from-indigo-500 to-blue-500' },
     { to: '/riders', icon: FiUsers, label: 'Riders', color: 'from-green-500 to-emerald-500' },
     { to: '/attendance', icon: FiList, label: 'Attendance', color: 'from-orange-500 to-amber-500' },
     { to: '/shipments', icon: FiTruck, label: 'Shipments', color: 'from-purple-500 to-violet-500' },

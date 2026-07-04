@@ -11,10 +11,31 @@ export const getItem = (key, defaultValue = null) => {
 
 export const setItem = (key, value) => {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    const serialized = JSON.stringify(value);
+    localStorage.setItem(key, serialized);
+    // Verify the data was actually saved
+    const saved = localStorage.getItem(key);
+    if (saved !== serialized) {
+      throw new Error('Verification failed');
+    }
     return true;
   } catch (error) {
     console.error('LocalStorage save failed:', error);
+    // Try to provide more helpful error message
+    if (error.name === 'QuotaExceededError' || error.code === 22) {
+      alert('Storage limit exceeded! Please clear some data or avoid uploading large images.');
+    }
+    return false;
+  }
+};
+
+export const isStorageAvailable = () => {
+  try {
+    const test = '__storage_test__';
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return true;
+  } catch {
     return false;
   }
 };

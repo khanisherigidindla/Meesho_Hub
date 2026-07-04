@@ -4,13 +4,19 @@ import {
   DEFAULT_SETTINGS,
   AUTH_CREDENTIALS,
 } from '../utils/constants';
-import { getItem, setItem, generateId, getTodayDate } from '../utils/storage';
+import { getItem, setItem, generateId, getTodayDate, isStorageAvailable } from '../utils/storage';
 
 const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
+  const [storageWarning, setStorageWarning] = useState(null);
   const [auth, setAuth] = useState(() => getItem(STORAGE_KEYS.AUTH, null));
-  const [riders, setRiders] = useState(() => getItem(STORAGE_KEYS.RIDERS, []));
+  const [riders, setRiders] = useState(() => {
+    if (!isStorageAvailable()) {
+      console.warn('LocalStorage is not available. Data will not be persisted.');
+    }
+    return getItem(STORAGE_KEYS.RIDERS, []);
+  });
   const [attendance, setAttendance] = useState(() => getItem(STORAGE_KEYS.ATTENDANCE, []));
   const [shipments, setShipments] = useState(() => getItem(STORAGE_KEYS.SHIPMENTS, []));
   const [settings, setSettings] = useState(() =>
@@ -19,7 +25,14 @@ export const AppProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => getItem(STORAGE_KEYS.THEME, 'light'));
 
   useEffect(() => {
-    setItem(STORAGE_KEYS.RIDERS, riders);
+    if (!isStorageAvailable()) {
+      console.warn('LocalStorage is not available. Data will not be persisted.');
+      return;
+    }
+    const success = setItem(STORAGE_KEYS.RIDERS, riders);
+    if (!success && riders.length > 0) {
+      console.error('Failed to save riders data. Storage may be full or unavailable.');
+    }
   }, [riders]);
 
   useEffect(() => {

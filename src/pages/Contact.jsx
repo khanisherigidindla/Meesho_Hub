@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiSend, FiMail, FiPhone, FiUser, FiMessageSquare, FiMapPin, FiGlobe } from 'react-icons/fi';
+import { FiSend, FiMail, FiUser, FiMessageSquare, FiMapPin, FiGlobe } from 'react-icons/fi';
 
 const Contact = () => {
   const [form, setForm] = useState({
     name: '',
     email: '',
-    phone: '',
     subject: '',
     message: '',
   });
@@ -22,7 +21,7 @@ const Contact = () => {
     // In a real app, this would send to an API
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
-    setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+    setForm({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
@@ -78,28 +77,19 @@ const Contact = () => {
                     <p className="font-semibold text-gray-900 dark:text-white">khanish.erigidindla@gmail.com</p>
                   </div>
                 </div>
-                
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <FiPhone className="w-5 h-5 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Phone</p>
-                    <p className="font-semibold text-gray-900 dark:text-white">+91 98765 43210</p>
-                  </div>
-                </div>
               </div>
             </div>
 
             <div className="card">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                 <FiMapPin className="w-4 h-4 text-primary-600" />
-                Location
+                Hub Location
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Meesho Warehouse<br />
-                Bengaluru, Karnataka<br />
-                India
+              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                28-3-378, Sri Lakshmi Nagar Road,<br />
+                Kisan Nagar, Ram Nagar,<br />
+                Nellore, Andhra Pradesh<br />
+                524002
               </p>
             </div>
           </motion.div>
@@ -143,18 +133,6 @@ const Contact = () => {
                       required
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label className="label">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    className="input-field"
-                    placeholder="+91 12345 67890"
-                  />
                 </div>
 
                 <div>

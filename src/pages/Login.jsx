@@ -54,7 +54,7 @@ const Login = () => {
             <FiShield className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Meesho_HUb </h1>
-          <p className="text-gray-300 text-sm">Meesho_HUb</p>
+          <p className="text-gray-300 text-sm">ADMIN-LoGIn</p>
         </motion.div>
 
         {/* Login Card */}

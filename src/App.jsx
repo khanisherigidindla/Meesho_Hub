@@ -41,7 +41,6 @@ function App() {
 <Route path="settings" element={<Settings />} />
         <Route path="contact" element={<Contact />} />
       </Route>
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

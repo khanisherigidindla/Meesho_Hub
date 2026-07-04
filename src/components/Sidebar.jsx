@@ -8,6 +8,10 @@ import {
   FiSettings,
   FiLogOut,
   FiPackage,
+  FiShoppingCart,
+  FiBox,
+  FiRefreshCw,
+  FiDollarSign,
   FiX,
 } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
@@ -17,6 +21,11 @@ const navItems = [
   { path: '/riders', icon: FiUsers, label: 'Riders' },
   { path: '/attendance', icon: FiCalendar, label: 'Attendance' },
   { path: '/shipments', icon: FiPackage, label: 'Shipments' },
+  { path: '/orders', icon: FiShoppingCart, label: 'Orders' },
+  { path: '/customers', icon: FiUsers, label: 'Customers' },
+  { path: '/inventory', icon: FiBox, label: 'Inventory' },
+  { path: '/returns', icon: FiRefreshCw, label: 'Returns' },
+  { path: '/revenue', icon: FiDollarSign, label: 'Revenue' },
   { path: '/profile', icon: FiUser, label: 'Profile' },
   { path: '/settings', icon: FiSettings, label: 'Settings' },
 ];

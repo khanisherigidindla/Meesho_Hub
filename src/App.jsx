@@ -6,6 +6,11 @@ import Dashboard from './pages/Dashboard';
 import Riders from './pages/Riders';
 import Attendance from './pages/Attendance';
 import Shipments from './pages/Shipments';
+import Orders from './pages/Orders';
+import Customers from './pages/Customers';
+import Inventory from './pages/Inventory';
+import Returns from './pages/Returns';
+import Revenue from './pages/Revenue';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 
@@ -26,6 +31,11 @@ function App() {
         <Route path="riders" element={<Riders />} />
         <Route path="attendance" element={<Attendance />} />
         <Route path="shipments" element={<Shipments />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="customers" element={<Customers />} />
+        <Route path="inventory" element={<Inventory />} />
+        <Route path="returns" element={<Returns />} />
+        <Route path="revenue" element={<Revenue />} />
         <Route path="profile" element={<Profile />} />
         <Route path="settings" element={<Settings />} />
       </Route>

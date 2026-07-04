@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiSave, FiDownload, FiUpload, FiTrash2, FiMoon, FiSun, FiPalette } from 'react-icons/fi';
+import { FiSave, FiDownload, FiUpload, FiTrash2, FiMoon, FiSun, FiSettings } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
 import ConfirmModal from '../components/ConfirmModal';
 import { exportAllData, downloadFile, readFileAsText } from '../utils/storage';
@@ -62,8 +62,8 @@ const Settings = () => {
         animate={{ opacity: 1, y: 0 }}
         className="flex items-center gap-3"
       >
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-600 to-slate-700 flex items-center justify-center">
-          <FiPalette className="w-6 h-6 text-white" />
+<div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-600 to-slate-700 flex items-center justify-center">
+          <FiSettings className="w-6 h-6 text-white" />
         </div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
       </motion.div>
@@ -75,9 +75,9 @@ const Settings = () => {
         transition={{ delay: 0.1 }}
         className="card"
       >
-        <h2 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-          <FiPalette className="w-5 h-5 text-primary-600" />
-          Theme Settings
+<h2 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <FiSettings className="w-5 h-5 text-primary-600" />
+            Theme Settings
         </h2>
         
         <div className="space-y-4">

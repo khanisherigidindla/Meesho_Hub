@@ -3,7 +3,6 @@ import { ProtectedRoute, PublicRoute } from './components/ProtectedRoute';
 import DashboardLayout from './layouts/DashboardLayout';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
 import Riders from './pages/Riders';
 import Attendance from './pages/Attendance';
 import Shipments from './pages/Shipments';

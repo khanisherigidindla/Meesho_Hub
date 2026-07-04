@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiLock, FiPackage } from 'react-icons/fi';
+import { FiMail, FiLock, FiPackage, FiArrowRight, FiShield } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
@@ -25,75 +25,90 @@ const Login = () => {
         setError(result.error);
       }
       setLoading(false);
-    }, 300);
+    }, 500);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
-      >
-        <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring' }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-4"
-          >
-            <FiPackage className="w-8 h-8 text-white" />
-          </motion.div>
-          <h1 className="text-3xl font-bold text-white mb-2">
-            Warehouse Rider Management
-          </h1>
-          <p className="text-primary-200">Meesho Warehouse Admin Portal</p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+      </div>
 
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, type: 'spring' }}
+        className="relative w-full max-w-md"
+      >
+        {/* Logo Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-center mb-8"
+        >
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 backdrop-blur-xl mb-4 shadow-2xl">
+            <FiShield className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">WRMS Pro</h1>
+          <p className="text-gray-300 text-sm">Warehouse Management System</p>
+        </motion.div>
+
+        {/* Login Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8"
+          className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8"
         >
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Sign In</h2>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-primary-600/20 flex items-center justify-center">
+              <FiPackage className="w-5 h-5 text-primary-400" />
+            </div>
+            <h2 className="text-xl font-bold text-white">Admin Portal Sign In</h2>
+          </div>
 
           {error && (
             <motion.div
-              initial={{ opacity: 0, x: -10 }}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm font-medium"
+              className="mb-5 p-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-300 text-sm font-medium flex items-center gap-2"
             >
+              <FiShield className="w-4 h-4" />
               {error}
             </motion.div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="label">Email</label>
+              <label className="label text-gray-300">Email Address</label>
               <div className="relative">
-                <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input-field pl-10"
+                  className="input-field-lg pl-12 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:bg-white/20"
                   placeholder="admin@gmail.com"
+                  required
                 />
               </div>
             </div>
 
             <div>
-              <label className="label">Password</label>
+              <label className="label text-gray-300">Password</label>
               <div className="relative">
-                <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input-field pl-10"
+                  className="input-field-lg pl-12 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:bg-white/20"
                   placeholder="Enter password"
+                  required
                 />
               </div>
             </div>
@@ -103,15 +118,49 @@ const Login = () => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3 text-base disabled:opacity-70"
+              className="w-full btn-primary flex items-center justify-center gap-2 py-3.5 text-base disabled:opacity-70 relative overflow-hidden"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              <div className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity"></div>
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Signing In...
+                </>
+              ) : (
+                <>
+                  Sign In
+                  <FiArrowRight className="w-5 h-5" />
+                </>
+              )}
             </motion.button>
           </form>
 
-          <p className="text-center text-xs text-gray-400 mt-6">
-            Warehouse Admin — Khanish Erigidindla
-          </p>
+          <div className="mt-6 pt-6 border-t border-white/10">
+            <p className="text-center text-xs text-gray-400">
+              Warehouse Admin — Khanish Erigidindla
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Quick Stats */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-6 grid grid-cols-3 gap-3 text-center"
+        >
+          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+            <p className="text-2xl font-bold text-white">100+</p>
+            <p className="text-xs text-gray-400">Riders</p>
+          </div>
+          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+            <p className="text-2xl font-bold text-white">500+</p>
+            <p className="text-xs text-gray-400">Orders</p>
+          </div>
+          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+            <p className="text-2xl font-bold text-white">25+</p>
+            <p className="text-xs text-gray-400">Warehouses</p>
+          </div>
         </motion.div>
       </motion.div>
     </div>

@@ -12,3 +12,7 @@ dist/
 .env
 .env.local
 .env.*.local
+
+# Coverage and build artifacts
+coverage/
+*.tsbuildinfo

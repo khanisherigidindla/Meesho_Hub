@@ -14,6 +14,7 @@ import Returns from './pages/Returns';
 import Revenue from './pages/Revenue';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -37,7 +38,8 @@ function App() {
         <Route path="returns" element={<Returns />} />
         <Route path="revenue" element={<Revenue />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="settings" element={<Settings />} />
+<Route path="settings" element={<Settings />} />
+        <Route path="contact" element={<Contact />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

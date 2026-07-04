@@ -53,8 +53,8 @@ const Login = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 backdrop-blur-xl mb-4 shadow-2xl">
             <FiShield className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">WRMS Pro</h1>
-          <p className="text-gray-300 text-sm">Warehouse Management System</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Meesho_HUb </h1>
+          <p className="text-gray-300 text-sm">Meesho_HUb</p>
         </motion.div>
 
         {/* Login Card */}

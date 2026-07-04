@@ -1,0 +1,77 @@
+# MeeshQRS Warehouse Management System - Features
+
+## Project Information
+- **Name**: MeeshQRS - Warehouse Management System
+- **Developer**: Khanish Erigidindla
+- **Email**: khanishram@gmail.com
+- **Phone**: 9392997308
+- **Hub Location**: 28-3-378, Sri Lakshmi Nagar Road, Kisan Nagar, Ram Nagar, Nellore, Andhra Pradesh 524002
+
+## Login Page
+- Glass-morphism design with animated gradient background
+- Email/Password authentication
+- Credentials: admin@gmail.com / admin123
+- Mobile responsive layout
+
+## Home Page (Dashboard)
+- Dynamic greeting (Good Morning/Afternoon/Evening based on time)
+- Live time/date display
+- Animated floating boxes (toy animation)
+- KPI cards with trend indicators
+- Quick Actions grid with hover effects
+- Shows immediately after login
+
+## Navigation Pages
+1. Dashboard - Full analytics dashboard with charts
+2. Riders - Manage rider information and status
+3. Attendance - Track rider attendance
+4. Shipments - Manage shipment and rider assignments
+5. Orders - View, edit, delete orders with filters
+6. Customers - Customer management with contact cards
+7. Inventory - Stock management with rack visualization mode
+8. Returns - Return tracking with reasons
+9. Revenue - Financial tracking by payment type
+10. Reports - Analytics with bar graphs and charts
+11. Settings - Theme picker, backup/restore
+12. Contact - Contact form and developer info
+
+## Theme System (10 Professional Colors)
+- Blue (default)
+- Emerald
+- Purple
+- Rose
+- Orange
+- Cyan
+- Indigo
+- Green
+- Violet
+- Pink
+- Dark/Light mode toggle
+- Applied immediately when selecting
+
+## Calculator Feature
+- Available in sidebar footer (above Logout)
+- Beautiful glass-morphism design
+- Full calculator with +, -, ×, ÷ operations
+- Responsive design for mobile
+
+## Reports & Analytics
+- Summary cards (Total Riders, Orders, Revenue, Shipments)
+- Orders by Status bar charts
+- Revenue by Payment Type charts
+- Monthly Revenue Trend visualization
+- Animated charts with smooth transitions
+
+## Deployment Ready
+- Netlify: Configured (netlify.toml)
+- Vercel: Configured (vercel.json)
+- Build command: npm run build || pnpm build
+- Publish directory: dist
+
+## Technical Features
+- React + Vite + Tailwind CSS
+- Framer Motion animations
+- Responsive design (mobile-first)
+- LocalStorage for data persistence
+- Export/Import JSON backup
+- Real-time theme switching

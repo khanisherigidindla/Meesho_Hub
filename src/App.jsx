@@ -15,6 +15,7 @@ import Revenue from './pages/Revenue';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Contact from './pages/Contact';
+import Reports from './pages/Reports';
 
 function App() {
   return (
@@ -36,9 +37,10 @@ function App() {
         <Route path="customers" element={<Customers />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="returns" element={<Returns />} />
-        <Route path="revenue" element={<Revenue />} />
+<Route path="revenue" element={<Revenue />} />
+        <Route path="reports" element={<Reports />} />
         <Route path="profile" element={<Profile />} />
-<Route path="settings" element={<Settings />} />
+        <Route path="settings" element={<Settings />} />
         <Route path="contact" element={<Contact />} />
       </Route>
     </Routes>

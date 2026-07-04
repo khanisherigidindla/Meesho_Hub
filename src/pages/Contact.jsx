@@ -35,7 +35,7 @@ const Contact = () => {
             <FiMail className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
-            Contact Us - MeeshQRS Warehouse
+            Contact Us - Meesho_HUb Warehouse
           </h1>
           <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
             Have questions? We'd love to hear from you!

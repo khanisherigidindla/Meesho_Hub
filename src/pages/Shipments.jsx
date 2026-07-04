@@ -6,7 +6,8 @@ import SearchBox from '../components/SearchBox';
 import Modal from '../components/Modal';
 import ConfirmModal from '../components/ConfirmModal';
 import { Badge, EmptyState, Pagination } from '../components/UIComponents';
-import { DELIVERY_STATUS, ITEMS_PER_PAGE } from '../utils/constants';
+import { ORDER_STATUS, ITEMS_PER_PAGE } from '../utils/constants';
+// DELIVERY_STATUS is now ORDER_STATUS
 import { shipmentsToCSV } from '../utils/csvUtils';
 import { downloadFile, getTodayDate } from '../utils/storage';
 
@@ -205,8 +206,8 @@ const Shipments = () => {
           </div>
           <div>
             <label className="label">Delivery Status</label>
-            <select name="status" value={form.status || ''} onChange={handleChange} className="input-field">
-              {DELIVERY_STATUS.map((s) => (
+<select name="status" value={form.status || ''} onChange={handleChange} className="input-field">
+              {ORDER_STATUS.map((s) => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>

@@ -5,7 +5,8 @@ import { useApp } from '../context/AppContext';
 import SearchBox from '../components/SearchBox';
 import Modal from '../components/Modal';
 import { StatCard, EmptyState } from '../components/UIComponents';
-import { PAYMENT_TYPE, downloadFile, getTodayDate } from '../utils/storage';
+import { PAYMENT_TYPE } from '../utils/constants';
+import { downloadFile, getTodayDate } from '../utils/storage';
 
 const Revenue = () => {
   const { revenue, addRevenue } = useApp();

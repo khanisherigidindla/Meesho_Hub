@@ -5,7 +5,8 @@ import { useApp } from '../context/AppContext';
 import SearchBox from '../components/SearchBox';
 import Modal from '../components/Modal';
 import { Badge, EmptyState } from '../components/UIComponents';
-import { RETURN_REASON, RETURN_TO_MEESHO_STATUS, downloadFile, getTodayDate } from '../utils/storage';
+import { RETURN_REASON, RETURN_TO_MEESHO_STATUS } from '../utils/constants';
+import { downloadFile, getTodayDate } from '../utils/storage';
 
 const Returns = () => {
   const { returns, addReturn } = useApp();

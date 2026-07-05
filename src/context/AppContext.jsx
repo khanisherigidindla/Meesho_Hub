@@ -12,6 +12,7 @@ import {
   RETURN_STATUS,
   RETURN_TO_MEESHO_STATUS,
   EXPENSE_TYPE,
+  SAMPLE_DATA,
 } from '../utils/constants';
 import { getItem, setItem, generateId, getTodayDate, isStorageAvailable } from '../utils/storage';
 
@@ -20,22 +21,45 @@ const AppContext = createContext(null);
 export const AppProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => getItem(STORAGE_KEYS.AUTH, null));
   const [riders, setRiders] = useState(() => {
-    if (!isStorageAvailable()) { console.warn('LocalStorage not available'); }
-    return getItem(STORAGE_KEYS.RIDERS, []);
+    const stored = getItem(STORAGE_KEYS.RIDERS, null);
+    return stored || SAMPLE_DATA.riders;
   });
   const [attendance, setAttendance] = useState(() => getItem(STORAGE_KEYS.ATTENDANCE, []));
   const [shipments, setShipments] = useState(() => getItem(STORAGE_KEYS.SHIPMENTS, []));
-  const [customers, setCustomers] = useState(() => getItem(STORAGE_KEYS.CUSTOMERS, []));
-  const [orders, setOrders] = useState(() => getItem(STORAGE_KEYS.ORDERS, []));
-  const [inventory, setInventory] = useState(() => getItem(STORAGE_KEYS.INVENTORY, []));
-  const [returns, setReturns] = useState(() => getItem(STORAGE_KEYS.RETURNS, []));
-  const [revenue, setRevenue] = useState(() => getItem(STORAGE_KEYS.REVENUE, []));
+  const [customers, setCustomers] = useState(() => {
+    const stored = getItem(STORAGE_KEYS.CUSTOMERS, null);
+    return stored || SAMPLE_DATA.customers;
+  });
+  const [orders, setOrders] = useState(() => {
+    const stored = getItem(STORAGE_KEYS.ORDERS, null);
+    return stored || SAMPLE_DATA.orders;
+  });
+  const [inventory, setInventory] = useState(() => {
+    const stored = getItem(STORAGE_KEYS.INVENTORY, null);
+    return stored || SAMPLE_DATA.inventory;
+  });
+  const [returns, setReturns] = useState(() => {
+    const stored = getItem(STORAGE_KEYS.RETURNS, null);
+    return stored || SAMPLE_DATA.returns;
+  });
+  const [revenue, setRevenue] = useState(() => {
+    const stored = getItem(STORAGE_KEYS.REVENUE, null);
+    return stored || SAMPLE_DATA.revenue;
+  });
+  const [damagedProducts, setDamagedProducts] = useState(() => {
+    const stored = getItem(STORAGE_KEYS.DAMAGED_PRODUCTS, null);
+    return stored || SAMPLE_DATA.damagedProducts;
+  });
+  const [expenses, setExpenses] = useState(() => {
+    const stored = getItem(STORAGE_KEYS.EXPENSES, null);
+    return stored || SAMPLE_DATA.expenses;
+  });
   const [stockMovements, setStockMovements] = useState(() => getItem(STORAGE_KEYS.STOCK_MOVEMENTS, []));
   const [settings, setSettings] = useState(() => getItem(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS));
   const [theme, setTheme] = useState(() => getItem(STORAGE_KEYS.THEME, 'light'));
   const [activityLog, setActivityLog] = useState(() => getItem(STORAGE_KEYS.ACTIVITY_LOG, []));
 
-  // Save to localStorage
+// Save to localStorage
   useEffect(() => { setItem(STORAGE_KEYS.RIDERS, riders); }, [riders]);
   useEffect(() => { setItem(STORAGE_KEYS.ATTENDANCE, attendance); }, [attendance]);
   useEffect(() => { setItem(STORAGE_KEYS.SHIPMENTS, shipments); }, [shipments]);
@@ -44,6 +68,8 @@ export const AppProvider = ({ children }) => {
   useEffect(() => { setItem(STORAGE_KEYS.INVENTORY, inventory); }, [inventory]);
   useEffect(() => { setItem(STORAGE_KEYS.RETURNS, returns); }, [returns]);
   useEffect(() => { setItem(STORAGE_KEYS.REVENUE, revenue); }, [revenue]);
+  useEffect(() => { setItem(STORAGE_KEYS.DAMAGED_PRODUCTS, damagedProducts); }, [damagedProducts]);
+  useEffect(() => { setItem(STORAGE_KEYS.EXPENSES, expenses); }, [expenses]);
   useEffect(() => { setItem(STORAGE_KEYS.STOCK_MOVEMENTS, stockMovements); }, [stockMovements]);
   useEffect(() => { setItem(STORAGE_KEYS.SETTINGS, settings); }, [settings]);
   useEffect(() => {
@@ -52,6 +78,38 @@ export const AppProvider = ({ children }) => {
     else document.documentElement.classList.remove('dark');
   }, [theme]);
   useEffect(() => { setItem(STORAGE_KEYS.ACTIVITY_LOG, activityLog); }, [activityLog]);
+
+  // Damaged Products CRUD
+  const addDamagedProduct = (data) => {
+    const newDamaged = { ...data, id: generateId(), createdAt: new Date().toISOString() };
+    setDamagedProducts((prev) => [newDamaged, ...prev]);
+    addActivity('Added Damaged Product', data.product || 'Unnamed');
+    return newDamaged;
+  };
+  const updateDamagedProduct = (id, data) => {
+    setDamagedProducts((prev) => prev.map((d) => d.id === id ? { ...d, ...data } : d));
+    addActivity('Updated Damaged Product', data.product || 'Updated');
+  };
+  const deleteDamagedProduct = (id) => {
+    setDamagedProducts((prev) => prev.filter((d) => d.id !== id));
+    addActivity('Deleted Damaged Product', `ID: ${id}`);
+  };
+
+  // Expenses CRUD
+  const addExpense = (data) => {
+    const newExpense = { ...data, id: generateId(), date: data.date || getTodayDate() };
+    setExpenses((prev) => [newExpense, ...prev]);
+    addActivity('Added Expense', `₹${data.amount || 0}`);
+    return newExpense;
+  };
+  const updateExpense = (id, data) => {
+    setExpenses((prev) => prev.map((e) => e.id === id ? { ...e, ...data } : e));
+    addActivity('Updated Expense', data.type || 'Updated');
+  };
+  const deleteExpense = (id) => {
+    setExpenses((prev) => prev.filter((e) => e.id !== id));
+    addActivity('Deleted Expense', `ID: ${id}`);
+  };
 
   const login = (email, password) => {
     if (email === AUTH_CREDENTIALS.email && password === AUTH_CREDENTIALS.password) {
@@ -141,12 +199,20 @@ export const AppProvider = ({ children }) => {
   };
   const updateReturn = (id, returnData) => { setReturns((prev) => prev.map((r) => r.id === id ? { ...r, ...returnData } : r)); addActivity('Updated Return', returnData.returnId || 'Updated'); };
 
-  // Revenue
+// Revenue
   const addRevenue = (revenueData) => {
     const newRevenue = { ...revenueData, id: generateId(), date: revenueData.date || getTodayDate() };
     setRevenue((prev) => [newRevenue, ...prev]);
     addActivity('Added Revenue', `₹${revenueData.amount || 0}`);
     return newRevenue;
+  };
+  const updateRevenue = (id, data) => {
+    setRevenue((prev) => prev.map((r) => r.id === id ? { ...r, ...data } : r));
+    addActivity('Updated Revenue', `₹${data.amount || 0}`);
+  };
+  const deleteRevenue = (id) => {
+    setRevenue((prev) => prev.filter((r) => r.id !== id));
+    addActivity('Deleted Revenue', `ID: ${id}`);
   };
 
   // Stats
@@ -179,19 +245,32 @@ export const AppProvider = ({ children }) => {
     };
   }, [riders, attendance, orders, inventory, revenue]);
 
-  const value = {
+const value = {
     auth, riders, attendance, shipments, customers, orders, inventory, returns, revenue,
-    stockMovements, settings, theme, activityLog, login, logout, toggleTheme, setSettings,
-    addRider, updateRider, deleteRider, addAttendance: (data) => { setAttendance((prev) => [{...data, id: generateId(), createdAt: new Date().toISOString()}, ...prev]); },
+    damagedProducts, expenses, stockMovements, settings, theme, activityLog, 
+    login, logout, toggleTheme, setSettings,
+    addRider, updateRider, deleteRider, deleteAllRiders: () => { setRiders([]); addActivity('Deleted All Riders', 'Cleared all records'); },
+    addAttendance: (data) => { setAttendance((prev) => [{...data, id: generateId(), createdAt: new Date().toISOString()}, ...prev]); },
     updateAttendance: (id, data) => { setAttendance((prev) => prev.map((a) => a.id === id ? {...a, ...data} : a)); },
     deleteAttendance: (id) => { setAttendance((prev) => prev.filter((a) => a.id !== id)); },
-    addShipment, updateShipment, deleteShipment, importRiders: (list) => { list.forEach(addRider); },
+    deleteAllAttendance: () => { setAttendance([]); addActivity('Deleted All Attendance', 'Cleared all records'); },
+    addShipment, updateShipment, deleteShipment, 
+    addDamagedProduct, updateDamagedProduct, deleteDamagedProduct,
+    deleteAllDamagedProducts: () => { setDamagedProducts([]); addActivity('Deleted All Damaged Products', 'Cleared all records'); },
+    addExpense, updateExpense, deleteExpense,
+    deleteAllExpenses: () => { setExpenses([]); addActivity('Deleted All Expenses', 'Cleared all records'); },
+    importRiders: (list) => { list.forEach(addRider); },
     restoreData: () => {},
     addCustomer, updateCustomer, deleteCustomer,
+    deleteAllCustomers: () => { setCustomers([]); addActivity('Deleted All Customers', 'Cleared all records'); },
     addOrder, updateOrder, deleteOrder,
+    deleteAllOrders: () => { setOrders([]); addActivity('Deleted All Orders', 'Cleared all records'); },
     addProduct, updateProduct, deleteProduct,
+    deleteAllProducts: () => { setInventory([]); addActivity('Deleted All Products', 'Cleared all records'); },
     addReturn, updateReturn,
+    deleteAllReturns: () => { setReturns([]); addActivity('Deleted All Returns', 'Cleared all records'); },
     addRevenue,
+    deleteAllRevenue: () => { setRevenue([]); addActivity('Deleted All Revenue', 'Cleared all records'); },
     getStats, getRiderById: (id) => riders.find((r) => r.id === id),
     getRiderShipments: (riderId) => shipments.filter((s) => s.riderId === riderId),
   };

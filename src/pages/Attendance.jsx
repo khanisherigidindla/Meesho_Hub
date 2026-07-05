@@ -1,3 +1,6 @@
+
+
+
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { FiPlus, FiEdit2, FiTrash2, FiDownload, FiCalendar } from 'react-icons/fi';
@@ -22,7 +25,8 @@ const emptyForm = {
 };
 
 const Attendance = () => {
-  const { attendance, riders, addAttendance, updateAttendance, deleteAttendance } = useApp();
+  const { attendance, riders, addAttendance, updateAttendance, deleteAttendance, deleteAllAttendance } = useApp();
+  const [showDeleteAll, setShowDeleteAll] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [modal, setModal] = useState(null);
@@ -84,10 +88,19 @@ const Attendance = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Attendance</h1>
-        <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
           <button onClick={handleExport} className="btn-secondary flex items-center gap-2 text-sm">
             <FiDownload className="w-4 h-4" /> Export CSV
           </button>
+          {attendance.length > 0 && (
+            <button
+              onClick={() => setShowDeleteAll(true)}
+              className="btn-danger flex items-center gap-2 text-sm"
+              title="Delete All Attendance"
+            >
+              <FiTrash2 className="w-4 h-4" /> Delete All
+            </button>
+          )}
           <button onClick={openAdd} className="btn-primary flex items-center gap-2 text-sm">
             <FiPlus className="w-4 h-4" /> Add Record
           </button>
@@ -216,6 +229,15 @@ const Attendance = () => {
         onConfirm={handleDelete}
         title="Delete Attendance"
         message="Are you sure you want to delete this attendance record?"
+      />
+
+      <ConfirmModal
+        isOpen={showDeleteAll}
+        onClose={() => setShowDeleteAll(false)}
+        onConfirm={() => { deleteAllAttendance(); setShowDeleteAll(false); }}
+        title="Delete All Attendance"
+        message="This will permanently delete all attendance records."
+        confirmText="Delete All"
       />
     </div>
   );

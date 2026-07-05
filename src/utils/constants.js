@@ -14,6 +14,74 @@ export const STORAGE_KEYS = {
   THEME: 'wrms_theme',
   ACTIVITY_LOG: 'wrms_activity_log',
   NOTIFICATIONS: 'wrms_notifications',
+  DAMAGED_PRODUCTS: 'wrms_damaged_products',
+  INCOMING_STOCK: 'wrms_incoming_stock',
+  EXPENSES: 'wrms_expenses',
+};
+
+// Sample Data
+export const SAMPLE_DATA = {
+  riders: [
+    {
+      id: 'sample-rider-1', riderId: 'R001', fullName: 'Rahul Kumar', phone: '9876543210',
+      address: 'Nagpur, Maharashtra', bikeNumber: 'MH-01-AB-1234', employmentStatus: 'Active',
+      attendanceStatus: 'Present', todayDeliveries: 3, status: 'Active', createdAt: new Date().toISOString()
+    }
+  ],
+  customers: [
+    {
+      id: 'sample-customer-1', customerId: 'C001', fullName: 'Priya Sharma', phone: '9123456789',
+      address: 'Ram Nagar, Nagpur', city: 'Nagpur', state: 'Maharashtra', pincode: '440010',
+      createdAt: new Date().toISOString()
+    }
+  ],
+  orders: [
+    {
+      id: 'sample-order-1', orderId: 'ORD001', customerId: 'sample-customer-1', customerName: 'Priya Sharma',
+      product: 'Shirt', quantity: 2, amount: 1200, deliveryStatus: 'Pending', paymentStatus: 'Paid',
+      deliveryDate: new Date().toISOString().split('T')[0], priority: 'High', createdAt: new Date().toISOString()
+    }
+  ],
+  inventory: [
+    {
+      id: 'sample-product-1', productId: 'P001', productName: 'Cotton Shirt', sku: 'SHIRT-001',
+      category: 'Clothing', quantity: 50, minStock: 10, rack: 'A1', shelf: '2', status: 'Available',
+      receivedDate: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString()
+    }
+  ],
+  returns: [
+    {
+      id: 'sample-return-1', returnId: 'RET001', orderId: 'ORD001', customer: 'Priya Sharma',
+      product: 'Cotton Shirt', reason: 'Damaged', quantity: 1, returnToMeesho: 'Pending',
+      createdAt: new Date().toISOString()
+    }
+  ],
+  revenue: [
+    {
+      id: 'sample-revenue-1', date: new Date().toISOString().split('T')[0], amount: 1200,
+      paymentType: 'Cash', description: 'Order ORD001 Payment', createdAt: new Date().toISOString()
+    }
+  ],
+  expenses: [
+    {
+      id: 'sample-expense-1', type: 'Fuel', amount: 500, date: new Date().toISOString().split('T')[0],
+      paidBy: 'Cash', remarks: 'Rider fuel expense', createdAt: new Date().toISOString()
+    }
+  ],
+  damagedProducts: [
+    {
+      id: 'sample-damaged-1', damageId: 'DMG001', productId: 'sample-product-1',
+      product: 'Cotton Shirt', quantity: 2, damageType: 'Minor', damageDate: new Date().toISOString().split('T')[0],
+      warehouseLocation: 'A1-2', remarks: 'Packaging damage', createdAt: new Date().toISOString()
+    }
+  ],
+  incomingStock: [
+    {
+      id: 'sample-stock-1', stockId: 'STK001', supplier: 'ABC Textiles', invoiceNumber: 'INV-123',
+      product: 'Cotton Shirt', quantity: 100, receivedDate: new Date().toISOString().split('T')[0],
+      condition: 'Good', createdAt: new Date().toISOString()
+    }
+  ]
 };
 
 // Auth

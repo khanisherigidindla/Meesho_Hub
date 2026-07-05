@@ -1,12 +1,13 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FiPlus, FiEye, FiEdit2, FiTrash2, FiDownload, FiBox, FiMap, FiGrid, FiAlertTriangle, FiSearch } from 'react-icons/fi';
+import { FiPlus, FiEye, FiEdit2, FiTrash2, FiDownload, FiPrinter, FiBox, FiMap, FiGrid, FiAlertTriangle, FiUpload, FiFileText } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
 import SearchBox from '../components/SearchBox';
 import Modal from '../components/Modal';
 import ConfirmModal from '../components/ConfirmModal';
 import { Badge, EmptyState, Pagination } from '../components/UIComponents';
-import { downloadFile, getTodayDate } from '../utils/storage';
+import { downloadFile, formatDate, getTodayDate } from '../utils/storage';
+import { exportToExcel } from '../utils/excelUtils';
 
 const Inventory = () => {
   const { inventory, addProduct, updateProduct, deleteProduct } = useApp();
@@ -17,8 +18,33 @@ const Inventory = () => {
   const [viewMode, setViewMode] = useState('table'); // table or grid
   const [page, setPage] = useState(1);
   const [form, setForm] = useState({
-    productId: '', productName: '', category: '', brand: '', sku: '', quantity: '', rackNumber: '', shelfNumber: '', binNumber: '', supplier: '', costPrice: '', sellingPrice: ''
+    productId: '',
+    productName: '',
+    sku: '',
+    category: '',
+    brand: '',
+    quantity: '',
+    availableQuantity: '',
+    damagedQuantity: '',
+    weight: '',
+    size: '',
+    color: '',
+    rackNumber: '',
+    shelfNumber: '',
+    binNumber: '',
+    purchasePrice: '',
+    sellingPrice: '',
+    condition: 'New',
+    notes: '',
+    remarks: ''
   });
+
+  // Current time display
+  const [currentTime, setCurrentTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const filtered = useMemo(() => {
     let list = [...inventory];
@@ -37,15 +63,67 @@ const Inventory = () => {
   const totalPages = Math.ceil(filtered.length / 10);
   const paginated = filtered.slice((page - 1) * 10, page * 10);
 
-  const handleAdd = () => { addProduct(form); setModal(null); setForm({ productId: '', productName: '', category: '', brand: '', sku: '', quantity: '', rackNumber: '', shelfNumber: '', binNumber: '', supplier: '', costPrice: '', sellingPrice: '' }); };
+  const handleAdd = () => {
+    addProduct(form);
+    setModal(null);
+    setForm({
+      productId: '', productName: '', sku: '', category: '', brand: '', quantity: '',
+      availableQuantity: '', damagedQuantity: '', weight: '', size: '', color: '',
+      rackNumber: '', shelfNumber: '', binNumber: '', purchasePrice: '', sellingPrice: '',
+      condition: 'New', notes: '', remarks: ''
+    });
+  };
 
-  const handleUpdate = () => { updateProduct(selected.id, form); setModal(null); setSelected(null); };
+  const handleUpdate = () => {
+    updateProduct(selected.id, form);
+    setModal(null);
+    setSelected(null);
+  };
 
   const handleExport = () => {
-    const csv = `Product ID,Name,SKU,Brand,Category,Qty,Rack,Shelf,Bin,Cost,Selling,Supplier\n${inventory.map(p => 
-      `${p.productId},${p.productName},${p.sku},${p.brand},${p.category},${p.quantity},${p.rackNumber},${p.shelfNumber},${p.binNumber},${p.costPrice},${p.sellingPrice},${p.supplier}`
+    const csv = `Product ID,Name,SKU,Category,Brand,Qty,Available,Damaged,Rack,Shelf,Bin,Purchase,Selling,Weight,Size,Color,Condition,Notes,Remarks\n${inventory.map(p =>
+      `${p.productId},${p.productName},${p.sku},${p.category},${p.brand},${p.quantity},${p.availableQuantity || ''},${p.damagedQuantity || ''},${p.rackNumber},${p.shelfNumber},${p.binNumber},${p.purchasePrice || ''},${p.sellingPrice},${p.weight || ''},${p.size || ''},${p.color || ''},${p.condition || 'New'},${p.notes || ''},${p.remarks || ''}`
     ).join('\n')}`;
-    downloadFile(csv, `inventory-${new Date().toISOString().split('T')[0]}.csv`);
+    downloadFile(csv, `inventory-${getTodayDate()}.csv`);
+  };
+
+  const handlePrint = () => {
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Inventory - Meesho Warehouse</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 12px; }
+            th { background: #3b82f6; color: white; }
+          </style>
+        </head>
+        <body>
+          <h1>Inventory - Meesho Warehouse</h1>
+          <p>Generated on: ${new Date().toLocaleString()}</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th><th>SKU</th><th>Qty</th><th>Price</th><th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${inventory.map(p => `<tr>
+                <td>${p.productName || '-'}</td>
+                <td>${p.sku || '-'}</td>
+                <td>${p.quantity || 0}</td>
+                <td>₹${p.sellingPrice || 0}</td>
+                <td>R${p.rackNumber}/S${p.shelfNumber}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
   };
 
   const handleChange = (e) => {
@@ -70,7 +148,7 @@ const Inventory = () => {
             </div>
             Inventory Management
           </h1>
-          <p className="text-gray-500 mt-1">Manage warehouse stock with rack locations</p>
+          <p className="text-gray-500 mt-1">{currentTime.toLocaleTimeString('en-IN')} • {currentTime.toLocaleDateString('en-IN')}</p>
         </div>
         <div className="flex gap-3">
           <div className="bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-700">
@@ -87,6 +165,9 @@ const Inventory = () => {
               <FiMap className="w-4 h-4" />
             </button>
           </div>
+          <button onClick={handlePrint} className="btn-secondary flex items-center gap-2">
+            <FiPrinter className="w-4 h-4" /> Print
+          </button>
           <button onClick={handleExport} className="btn-secondary flex items-center gap-2">
             <FiDownload className="w-4 h-4" /> Export
           </button>
@@ -130,7 +211,8 @@ const Inventory = () => {
                     <th className="text-left py-4 px-3 hidden md:table-cell">SKU</th>
                     <th className="text-left py-4 px-3 hidden lg:table-cell">Location</th>
                     <th className="text-left py-4 px-3">Qty</th>
-                    <th className="text-left py-4 px-3 hidden md:table-cell">Selling Price</th>
+                    <th className="text-left py-4 px-3 hidden md:table-cell">Available</th>
+                    <th className="text-left py-4 px-3 hidden lg:table-cell">Selling Price</th>
                     <th className="text-center py-4 px-3">Actions</th>
                   </tr>
                 </thead>
@@ -174,7 +256,8 @@ const Inventory = () => {
                           )}
                         </div>
                       </td>
-                      <td className="py-4 px-3 hidden md:table-cell font-medium">₹{product.sellingPrice || 0}</td>
+                      <td className="py-4 px-3 hidden md:table-cell">{product.availableQuantity || product.quantity || 0}</td>
+                      <td className="py-4 px-3 hidden lg:table-cell font-medium">₹{product.sellingPrice || 0}</td>
                       <td className="py-4 px-3">
                         <div className="flex items-center justify-center gap-2">
                           <button onClick={() => { setSelected(product); setModal('view'); }} className="p-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600">
@@ -263,12 +346,12 @@ const Inventory = () => {
         <form onSubmit={(e) => { e.preventDefault(); modal === 'add' ? handleAdd() : handleUpdate(); }} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="label">Product ID <span className="text-red-500">*</span></label>
-              <input type="text" name="productId" value={form.productId || ''} onChange={handleChange} className="input-field" required />
+              <label className="label">Product ID</label>
+              <input type="text" name="productId" value={form.productId || ''} onChange={handleChange} className="input-field" />
             </div>
             <div>
-              <label className="label">Product Name <span className="text-red-500">*</span></label>
-              <input type="text" name="productName" value={form.productName || ''} onChange={handleChange} className="input-field" required />
+              <label className="label">Product Name</label>
+              <input type="text" name="productName" value={form.productName || ''} onChange={handleChange} className="input-field" />
             </div>
             <div>
               <label className="label">Category</label>
@@ -283,8 +366,16 @@ const Inventory = () => {
               <input type="text" name="sku" value={form.sku || ''} onChange={handleChange} className="input-field" />
             </div>
             <div>
-              <label className="label">Quantity <span className="text-red-500">*</span></label>
-              <input type="number" name="quantity" value={form.quantity || ''} onChange={handleChange} className="input-field" min="0" required />
+              <label className="label">Quantity</label>
+              <input type="number" name="quantity" value={form.quantity || ''} onChange={handleChange} className="input-field" min="0" />
+            </div>
+            <div>
+              <label className="label">Available Quantity</label>
+              <input type="number" name="availableQuantity" value={form.availableQuantity || ''} onChange={handleChange} className="input-field" min="0" />
+            </div>
+            <div>
+              <label className="label">Damaged Quantity</label>
+              <input type="number" name="damagedQuantity" value={form.damagedQuantity || ''} onChange={handleChange} className="input-field" min="0" />
             </div>
             <div className="border-t border-gray-100 pt-4 md:col-span-2">
               <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
@@ -304,16 +395,40 @@ const Inventory = () => {
               <input type="text" name="binNumber" value={form.binNumber || ''} onChange={handleChange} className="input-field" />
             </div>
             <div>
-              <label className="label">Supplier</label>
-              <input type="text" name="supplier" value={form.supplier || ''} onChange={handleChange} className="input-field" />
+              <label className="label">Weight</label>
+              <input type="text" name="weight" value={form.weight || ''} onChange={handleChange} className="input-field" />
             </div>
             <div>
-              <label className="label">Cost Price (₹)</label>
-              <input type="number" step="0.01" name="costPrice" value={form.costPrice || ''} onChange={handleChange} className="input-field" />
+              <label className="label">Size</label>
+              <input type="text" name="size" value={form.size || ''} onChange={handleChange} className="input-field" />
+            </div>
+            <div>
+              <label className="label">Color</label>
+              <input type="text" name="color" value={form.color || ''} onChange={handleChange} className="input-field" />
+            </div>
+            <div>
+              <label className="label">Purchase Price (₹)</label>
+              <input type="number" step="0.01" name="purchasePrice" value={form.purchasePrice || ''} onChange={handleChange} className="input-field" />
             </div>
             <div>
               <label className="label">Selling Price (₹)</label>
               <input type="number" step="0.01" name="sellingPrice" value={form.sellingPrice || ''} onChange={handleChange} className="input-field" />
+            </div>
+            <div>
+              <label className="label">Condition</label>
+              <select name="condition" value={form.condition || ''} onChange={handleChange} className="input-field">
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+                <option value="Refurbished">Refurbished</option>
+              </select>
+            </div>
+            <div className="md:col-span-2">
+              <label className="label">Notes</label>
+              <textarea name="notes" value={form.notes || ''} onChange={handleChange} className="input-field h-20 resize-none" placeholder="Add notes..."></textarea>
+            </div>
+            <div className="md:col-span-2">
+              <label className="label">Remarks</label>
+              <textarea name="remarks" value={form.remarks || ''} onChange={handleChange} className="input-field h-20 resize-none" placeholder="Add remarks..."></textarea>
             </div>
           </div>
           <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
@@ -350,24 +465,32 @@ const Inventory = () => {
                 <p className="font-semibold">{selected.brand || '-'}</p>
               </div>
               <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
-                <p className="text-xs text-gray-500 mb-1">Supplier</p>
-                <p className="font-semibold">{selected.supplier || '-'}</p>
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
                 <p className="text-xs text-gray-500 mb-1">Quantity</p>
                 <p className="font-semibold">{selected.quantity || 0} {isLowStock(selected.quantity) && <FiAlertTriangle className="inline w-4 h-4 text-red-500" />}</p>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
+                <p className="text-xs text-gray-500 mb-1">Available</p>
+                <p className="font-semibold">{selected.availableQuantity || selected.quantity || 0}</p>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
+                <p className="text-xs text-gray-500 mb-1">Damaged</p>
+                <p className="font-semibold">{selected.damagedQuantity || 0}</p>
               </div>
               <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
                 <p className="text-xs text-gray-500 mb-1">Selling Price</p>
                 <p className="font-semibold">₹{selected.sellingPrice || 0}</p>
               </div>
               <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
+                <p className="text-xs text-gray-500 mb-1">Condition</p>
+                <p className="font-semibold">{selected.condition || 'New'}</p>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
                 <p className="text-xs text-gray-500 mb-1">Rack Location</p>
                 <p className="font-semibold">R{selected.rackNumber} - S{selected.shelfNumber} - B{selected.binNumber}</p>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
-                <p className="text-xs text-gray-500 mb-1">Profit Margin</p>
-                <p className="font-semibold">₹{(selected.sellingPrice - selected.costPrice) || 0}</p>
+              <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4 md:col-span-2">
+                <p className="text-xs text-gray-500 mb-1">Notes</p>
+                <p className="font-semibold whitespace-pre-wrap">{selected.notes || '-'}</p>
               </div>
             </div>
           </div>

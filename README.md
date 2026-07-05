@@ -1,83 +1,87 @@
-# Warehouse Rider Management System
+# Meesho Warehouse Management System
 
-A modern, mobile-responsive web application for managing warehouse riders, attendance, and shipments. Built with React, Vite, and Tailwind CSS.
+A modern, mobile-responsive web application for managing warehouse operations. Built with React + Vite + Tailwind CSS.
 
-## Features
+## 🚀 Features
 
-- 📱 **Mobile-First Design** - Fully responsive UI optimized for mobile devices
-- 🚴 **Rider Management** - Add, edit, view, and manage rider information
-- 📅 **Attendance Tracking** - Track daily rider attendance with status indicators
-- 📦 **Shipment Management** - Assign and track parcel deliveries
-- 🌙 **Dark Mode** - Built-in dark theme support
-- 📊 **Dashboard Stats** - Quick overview of key metrics
-- 💾 **Local Storage** - Data persistence with backup/restore functionality
-- 📤 **CSV Export** - Export data to CSV files
-- 🔐 **Protected Routes** - Authentication-based access control
+### Core Modules
+- 📊 **Dashboard** - Real-time stats, notifications, and quick actions
+- 📦 **Orders** - Complete order management with all fields (Transaction ID, Tracking, Customer, Address, Payment Status, etc.)
+- 📦 **Products** - Product catalog with SKU, pricing, weight, size, color
+- 📥 **Inventory** - Stock management with rack/shelf/bin locations, low stock alerts
+- 👥 **Customers** - Customer database with phone, address, order tracking
+- 🚴 **Riders** - Delivery personnel management with bank details, PAN, Aadhar
+- 📅 **Attendance** - Daily attendance tracking with in/out times
+- 🔄 **Returns** - Return processing and tracking
+- 💥 **Damaged Products** - View and manage damaged inventory
+- 💰 **Revenue** - Revenue tracking (Cash, UPI, Online, COD) with profit calculation
+- 💸 **Expenses** - Expense management and tracking
+- 📝 **Notepad** - LocalStorage-based notes with save/export/print
+- 📆 **Calendar** - Monthly calendar with event management
+- 📈 **Reports** - Generate various reports
 
-## Tech Stack
+### Export/Import Features
+- 📤 **Excel/CSV Export** - All modules support CSV export
+- 📥 **CSV Import** - Import data from CSV files
+- 🖨️ **Print/PDF** - Print-friendly views for all modules
+
+### UI/UX Features
+- 📱 **Mobile-First Design** - Optimized for Android phones, tablets, and desktop
+- 🌙 **Dark/Light Mode** - Toggle themes with persistent storage
+- ⏱️ **Live Time Display** - Shows current time on all pages
+- 🎨 **Professional SaaS Design** - Inspired by Linear, Notion, Stripe
+- 🪄 **Smooth Animations** - Framer Motion transitions
+
+## 🛠️ Tech Stack
 
 - **React 18** - Frontend framework
-- **Vite** - Build tool and development server
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **React Router** - Client-side routing
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Styling
+- **Framer Motion** - Animations
+- **React Router** - Routing
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or pnpm
-
-### Installation
+## 🚀 Getting Started
 
 ```bash
-npm install
+# Install dependencies
+pnpm install
+
+# Development server (http://localhost:5173)
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
 ```
 
-### Development
+## 🌐 Deployment
 
-```bash
-npm run dev
-```
+### Vercel
+Push to GitHub and import to Vercel. The `vercel.json` is pre-configured.
 
-### Build for Production
+### Netlify
+Push to GitHub and import to Netlify. The `netlify.toml` is pre-configured.
 
-```bash
-npm run build
-```
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-## Deployment
-
-This project is configured for Vercel deployment. The `vercel.json` file includes:
-
-- SPA routing with fallback to `index.html`
-- Automatic build command detection
-- Optimized output directory
-
-## Project Structure
-
-```
-src/
-├── components/       # Reusable UI components
-├── context/         # React context for state management
-├── layouts/         # Layout components
-├── pages/           # Route pages
-├── styles/          # Global styles
-└── utils/           # Utility functions
-```
-
-## Default Login
-
+## 🔐 Default Login
 - Email: `admin@gmail.com`
 - Password: `admin123`
 
-## License
+## 💾 Data Storage
+- All data stored in browser LocalStorage
+- No backend/database required
+- Data persists until manually cleared
 
-MIT
+## Project Structure
+```
+src/
+├── components/       # UI components (Modal, Search, Badge, etc.)
+├── context/          # AppContext for global state
+├── layouts/          # Dashboard layout
+├── pages/            # Route pages (Orders, Inventory, Riders, etc.)
+├── styles/           # Tailwind CSS styles
+└── utils/            # Helper functions and constants
+```
+
+## MIT License

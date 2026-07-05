@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { FiPlus, FiEdit2, FiDownload, FiRefreshCw } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiDownload, FiRefreshCw, FiTrash } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
 import SearchBox from '../components/SearchBox';
 import Modal from '../components/Modal';
@@ -9,9 +9,10 @@ import { RETURN_REASON, RETURN_TO_MEESHO_STATUS } from '../utils/constants';
 import { downloadFile, getTodayDate } from '../utils/storage';
 
 const Returns = () => {
-  const { returns, addReturn } = useApp();
+  const { returns, addReturn, deleteAllReturns } = useApp();
   const [search, setSearch] = useState('');
   const [modal, setModal] = useState(null);
+  const [deleteAllId, setDeleteAllId] = useState(null);
   const [form, setForm] = useState({ returnId: '', orderId: '', customer: '', product: '', reason: '', quantity: '', returnToMeesho: 'Pending' });
 
   const filtered = useMemo(() => {
@@ -36,6 +37,9 @@ const Returns = () => {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Returns</h1>
         <div className="flex flex-wrap gap-2">
           <button onClick={handleExport} className="btn-secondary flex items-center gap-2 text-sm"><FiDownload className="w-4 h-4" /> Export CSV</button>
+          {returns.length > 0 && (
+            <button onClick={() => setDeleteAllId('all')} className="btn-danger flex items-center gap-2 text-sm" title="Delete All Returns"><FiTrash className="w-4 h-4" /> Delete All</button>
+          )}
           <button onClick={() => setModal('add')} className="btn-primary flex items-center gap-2 text-sm"><FiPlus className="w-4 h-4" /> Add Return</button>
         </div>
       </div>

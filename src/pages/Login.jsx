@@ -143,7 +143,7 @@ const Login = () => {
 
           <div className="mt-6 pt-6 border-t border-white/10">
             <p className="text-center text-xs text-gray-500">
-              © 2024 Warehouse Management System
+              © 2026  Meesho_HUb
             </p>
           </div>
         </motion.div>
